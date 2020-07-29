@@ -55,7 +55,7 @@ export function useGameState() {
     if (calculateWinner(board) || board[square]) {
       return;
     }
-    board[square] = gameState.xIsNext ? "X" : "O";
+    board[square] = gameState.xIsNext ? 'X' : 'O';
     setGameState({
       history: history.concat(board),
       step: history.length,
