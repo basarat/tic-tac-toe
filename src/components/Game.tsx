@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { useGameState, Value } from './GameState';
+import { useGame, Value, BoardState } from './GameState';
 
 type LayoutProps = {
   spacing: number
@@ -30,37 +30,51 @@ function Game() {
     jumpTo,
     winner,
     handleClick,
-  } = useGameState();
+  } = useGame();
 
   return (
     <Row spacing={20}>
       <Column spacing={20}>
-        <div>Status</div>
-        <Board />
+        <div>{
+          winner
+            ? `Winner ${winner}`
+            : `Next Player ${gameState.xIsNext ? 'X' : 'O'}`
+        }</div>
+        <Board board={current} onClick={handleClick} />
       </Column>
-      <Log />
+      <Log history={gameState.history} jumpTo={jumpTo} />
     </Row>
   );
 }
 
 
-function Board() {
+type BoardProps = {
+  board: BoardState,
+  onClick: (square: number) => void,
+}
+function Board({ board, onClick }: BoardProps) {
+  const createProps = (square: number): SquareProps => {
+    return {
+      value: board[square],
+      onClick: () => onClick(square),
+    }
+  };
   return (
     <Column spacing={0}>
       <Row spacing={0}>
-        <Square value={null} />
-        <Square value={null} />
-        <Square value={null} />
+        <Square {...createProps(0)} />
+        <Square {...createProps(1)} />
+        <Square {...createProps(2)} />
       </Row>
       <Row spacing={0}>
-        <Square value={null} />
-        <Square value={null} />
-        <Square value={null} />
+        <Square {...createProps(3)} />
+        <Square {...createProps(4)} />
+        <Square {...createProps(5)} />
       </Row>
       <Row spacing={0}>
-        <Square value={null} />
-        <Square value={null} />
-        <Square value={null} />
+        <Square {...createProps(6)} />
+        <Square {...createProps(7)} />
+        <Square {...createProps(8)} />
       </Row>
     </Column>
   );
@@ -78,20 +92,29 @@ const StyledSquare = styled.button`
   padding: 0;
 `;
 type SquareProps = {
-  value: Value;
+  value: Value,
+  onClick: () => void,
 }
 function Square(props: SquareProps) {
   return (
-    <StyledSquare>
+    <StyledSquare onClick={props.onClick}>
       {props.value}
     </StyledSquare>
   );
 }
 
-function Log() {
+type LogProps = {
+  history: BoardState[],
+  jumpTo: (step: number) => void,
+}
+function Log(props: LogProps) {
   return (
     <ol>
-      <li><button>Go to move</button></li>
+      {props.history.map((history, index) => {
+        return (
+          <li><button onClick={() => props.jumpTo(index)}>Go to move</button></li>
+        );
+      })}
     </ol>
   );
 }
