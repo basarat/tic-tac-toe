@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 export type Value = 'X' | 'O' | null;
 
 export type BoardState = Value[];
-const createBoardState = () => Array(9).fill(null);
+const createBoardState = () => Array<Value>(9).fill(null);
 
 function calculateWinner(board: BoardState) {
   const winningCombinations = [
@@ -38,32 +38,35 @@ export function useGame() {
     xIsNext: true,
   });
 
+  console.log(gameState.step, gameState.history);
   const current = gameState.history[gameState.step];
 
   function jumpTo(step: number) {
-    setGameState({
-      ...gameState,
+    setGameState(state => ({
+      history: state.history,
       step,
       xIsNext: (step % 2) === 0,
-    });
+    }));
   }
 
   const winner = calculateWinner(current);
 
-  function handleClick(square: number) {
-    const history = gameState.history.slice(0, gameState.step + 1);
-    const current = history[history.length - 1];
-    const board = current.slice();
+  const handleClick = useCallback((square: number) => {
+    const history = gameState.history;
+    const board = history[history.length - 1];
     if (calculateWinner(board) || board[square]) {
       return;
     }
-    board[square] = gameState.xIsNext ? 'X' : 'O';
+    const newBoard = board.slice();
+    newBoard[square] = gameState.xIsNext ? 'X' : 'O';
+    const newHistory = history.slice();
+    newHistory.push(newBoard);
     setGameState({
-      history: history.concat(board),
-      step: history.length,
+      history: newHistory,
+      step: newHistory.length - 1,
       xIsNext: !gameState.xIsNext
     });
-  }
+  }, [gameState]);
 
   return {
     gameState,
