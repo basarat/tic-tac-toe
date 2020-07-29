@@ -28,22 +28,20 @@ function calculateWinner(board: BoardState) {
 export type GameState = {
   history: BoardState[],
   step: number,
-  xIsNext: boolean,
 }
 
 export function useGame() {
   const [gameState, setGameState] = useState<GameState>({
     history: [createBoardState()],
     step: 0,
-    xIsNext: true,
   });
 
-  console.log(gameState.step, gameState.history);
   const current = gameState.history[gameState.step];
+  const xIsNext = (gameState.step % 2) === 0;
 
   function jumpTo(step: number) {
-    setGameState(state => ({
-      history: state.history,
+    setGameState(gameState => ({
+      history: gameState.history,
       step,
       xIsNext: (step % 2) === 0,
     }));
@@ -51,26 +49,25 @@ export function useGame() {
 
   const winner = calculateWinner(current);
 
-  const handleClick = useCallback((square: number) => {
-    const history = gameState.history;
+  function handleClick(square: number) {
+    const history = gameState.history.slice(0, gameState.step + 1);
     const board = history[history.length - 1];
     if (calculateWinner(board) || board[square]) {
       return;
     }
     const newBoard = board.slice();
-    newBoard[square] = gameState.xIsNext ? 'X' : 'O';
-    const newHistory = history.slice();
-    newHistory.push(newBoard);
+    newBoard[square] = (gameState.step % 2) === 0 ? 'X' : 'O';
+    history.push(newBoard);
     setGameState({
-      history: newHistory,
-      step: newHistory.length - 1,
-      xIsNext: !gameState.xIsNext
+      history: history,
+      step: history.length - 1,
     });
-  }, [gameState]);
+  }
 
   return {
     gameState,
     current,
+    xIsNext,
     jumpTo,
     winner,
     handleClick,

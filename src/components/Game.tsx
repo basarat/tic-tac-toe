@@ -27,6 +27,7 @@ function Game() {
   const {
     gameState,
     current,
+    xIsNext,
     jumpTo,
     winner,
     handleClick,
@@ -38,7 +39,7 @@ function Game() {
         <div>{
           winner
             ? `Winner ${winner}`
-            : `Next Player ${gameState.xIsNext ? 'X' : 'O'}`
+            : `Next Player ${xIsNext ? 'X' : 'O'}`
         }</div>
         <Board board={current} onClick={handleClick} />
       </Column>
