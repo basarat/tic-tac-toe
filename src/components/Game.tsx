@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { useGameState, Value } from './GameState';
 
 type LayoutProps = {
   spacing: number
@@ -23,6 +24,14 @@ const Column = styled.div<LayoutProps>`
 
 
 function Game() {
+  const {
+    gameState,
+    current,
+    jumpTo,
+    winner,
+    handleClick,
+  } = useGameState();
+
   return (
     <Row spacing={20}>
       <Column spacing={20}>
@@ -39,19 +48,19 @@ function Board() {
   return (
     <Column spacing={0}>
       <Row spacing={0}>
-        <Square />
-        <Square />
-        <Square />
+        <Square value={null} />
+        <Square value={null} />
+        <Square value={null} />
       </Row>
       <Row spacing={0}>
-        <Square />
-        <Square />
-        <Square />
+        <Square value={null} />
+        <Square value={null} />
+        <Square value={null} />
       </Row>
       <Row spacing={0}>
-        <Square />
-        <Square />
-        <Square />
+        <Square value={null} />
+        <Square value={null} />
+        <Square value={null} />
       </Row>
     </Column>
   );
@@ -68,9 +77,8 @@ const StyledSquare = styled.button`
   line-height: 34px;
   padding: 0;
 `;
-type Value = 'X' | 'O';
 type SquareProps = {
-  value?: Value;
+  value: Value;
 }
 function Square(props: SquareProps) {
   return (
