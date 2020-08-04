@@ -9,17 +9,13 @@ type LayoutProps = {
 const Row = styled.div<LayoutProps>`
   display: flex;
   flex-direction: row;
-  *:not(:last-child) {
-    margin-right: ${(props) => props.spacing}px;
-  }
+  gap: ${(props) => props.spacing}px;
 `;
 
 const Column = styled.div<LayoutProps>`
   display: flex;
   flex-direction: column;
-  *:not(:last-child) {
-    margin-bottom: ${(props) => props.spacing}px;
-  }
+  gap: ${(props) => props.spacing}px;
 `;
 
 
