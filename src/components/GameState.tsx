@@ -38,15 +38,6 @@ export function useGameState() {
 
   const current = gameState.history[gameState.step];
   const xIsNext = (gameState.step % 2) === 0;
-
-  function jumpTo(step: number) {
-    setGameState(gameState => ({
-      history: gameState.history,
-      step,
-      xIsNext: (step % 2) === 0,
-    }));
-  }
-
   const winner = calculateWinner(current);
 
   function handleClick(square: number) {
@@ -64,12 +55,20 @@ export function useGameState() {
     });
   }
 
+  function jumpTo(step: number) {
+    setGameState(gameState => ({
+      history: gameState.history,
+      step,
+      xIsNext: (step % 2) === 0,
+    }));
+  }
+
   return {
     gameState,
     current,
     xIsNext,
-    jumpTo,
     winner,
     handleClick,
+    jumpTo,
   };
 }
