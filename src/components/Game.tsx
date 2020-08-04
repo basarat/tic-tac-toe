@@ -78,15 +78,14 @@ function Board({ board, onClick }: BoardProps) {
 }
 
 const StyledSquare = styled.button`
-  background: #fff;
-  border: 1px solid #999;
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
   width: 34px;
   height: 34px;
-  line-height: 34px;
+  background: #fff;
+  border: 1px solid #999;
   padding: 0;
+
+  font-size: 24px;
+  font-weight: bold;
 `;
 type SquareProps = {
   value: Value,
