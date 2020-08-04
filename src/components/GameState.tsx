@@ -54,7 +54,6 @@ export function useGameState() {
       step: history.length - 1,
     });
   }
-
   function jumpTo(step: number) {
     setGameState(gameState => ({
       history: gameState.history,
