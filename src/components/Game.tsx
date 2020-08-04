@@ -3,19 +3,19 @@ import styled from 'styled-components';
 import { useGame, Value, BoardState } from './GameState';
 
 type LayoutProps = {
-  spacing: number
+  gap: number,
 }
 
 const Row = styled.div<LayoutProps>`
   display: flex;
   flex-direction: row;
-  gap: ${(props) => props.spacing}px;
+  gap: ${(props) => props.gap}px;
 `;
 
 const Column = styled.div<LayoutProps>`
   display: flex;
   flex-direction: column;
-  gap: ${(props) => props.spacing}px;
+  gap: ${(props) => props.gap}px;
 `;
 
 
@@ -30,8 +30,8 @@ function Game() {
   } = useGame();
 
   return (
-    <Row spacing={20}>
-      <Column spacing={20}>
+    <Row gap={20}>
+      <Column gap={20}>
         <div>{
           winner
             ? `Winner ${winner}`
@@ -57,18 +57,18 @@ function Board({ board, onClick }: BoardProps) {
     }
   };
   return (
-    <Column spacing={0}>
-      <Row spacing={0}>
+    <Column gap={0}>
+      <Row gap={0}>
         <Square {...createProps(0)} />
         <Square {...createProps(1)} />
         <Square {...createProps(2)} />
       </Row>
-      <Row spacing={0}>
+      <Row gap={0}>
         <Square {...createProps(3)} />
         <Square {...createProps(4)} />
         <Square {...createProps(5)} />
       </Row>
-      <Row spacing={0}>
+      <Row gap={0}>
         <Square {...createProps(6)} />
         <Square {...createProps(7)} />
         <Square {...createProps(8)} />
