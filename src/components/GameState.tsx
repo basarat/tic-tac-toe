@@ -71,5 +71,5 @@ export function useGameState() {
     jumpTo,
     winner,
     handleClick,
-  }
+  };
 }
