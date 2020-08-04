@@ -30,7 +30,7 @@ export type GameState = {
   step: number,
 }
 
-export function useGame() {
+export function useGameState() {
   const [gameState, setGameState] = useState<GameState>({
     history: [createBoardState()],
     step: 0,

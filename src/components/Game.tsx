@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { useGame, Value, BoardState } from './GameState';
+import { useGameState, Value, BoardState } from './GameState';
 
 type LayoutProps = {
   gap: number,
@@ -27,7 +27,7 @@ function Game() {
     jumpTo,
     winner,
     handleClick,
-  } = useGame();
+  } = useGameState();
 
   return (
     <Row gap={20}>
