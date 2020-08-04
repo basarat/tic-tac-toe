@@ -5,7 +5,7 @@ export type Value = 'X' | 'O' | null;
 export type BoardState = Value[];
 const createBoardState = () => Array<Value>(9).fill(null);
 
-function calculateWinner(board: BoardState) {
+function calculateWinner(boardState: BoardState) {
   const winningCombinations = [
     [0, 1, 2],
     [3, 4, 5],
@@ -18,8 +18,8 @@ function calculateWinner(board: BoardState) {
   ];
   for (let i = 0; i < winningCombinations.length; i++) {
     const [a, b, c] = winningCombinations[i];
-    if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-      return board[a];
+    if (boardState[a] && boardState[a] === boardState[b] && boardState[a] === boardState[c]) {
+      return boardState[a];
     }
   }
   return null;
@@ -51,13 +51,13 @@ export function useGame() {
 
   function handleClick(square: number) {
     const history = gameState.history.slice(0, gameState.step + 1);
-    const board = history[history.length - 1];
-    if (calculateWinner(board) || board[square]) {
+    const boardState = history[history.length - 1];
+    if (calculateWinner(boardState) || boardState[square]) {
       return;
     }
-    const newBoard = board.slice();
-    newBoard[square] = (gameState.step % 2) === 0 ? 'X' : 'O';
-    history.push(newBoard);
+    const newBoardState = boardState.slice();
+    newBoardState[square] = (gameState.step % 2) === 0 ? 'X' : 'O';
+    history.push(newBoardState);
     setGameState({
       history: history,
       step: history.length - 1,
