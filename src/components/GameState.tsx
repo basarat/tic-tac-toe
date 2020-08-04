@@ -55,11 +55,10 @@ export function useGameState() {
     });
   }
   function jumpTo(step: number) {
-    setGameState(gameState => ({
+    setGameState({
       history: gameState.history,
       step,
-      xIsNext: (step % 2) === 0,
-    }));
+    });
   }
 
   return {
