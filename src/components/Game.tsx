@@ -83,7 +83,6 @@ const StyledSquare = styled.button`
   background: #fff;
   border: 1px solid #999;
   padding: 0;
-
   font-size: 24px;
   font-weight: bold;
 `;
